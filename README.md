@@ -1,7 +1,7 @@
 # Senai Back-End
 
 Repositório criado para entrega da atividade proposta 
-no encotro remoto 2 do dia 01/10.
+no encotro remoto 2 do dia 01/10/2021.
 
 ## Caracteristicas do Sistema
 1. Deverá armazenar os cadastros das pessoas físicas e jurídicas;
