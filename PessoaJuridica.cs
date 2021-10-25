@@ -11,6 +11,8 @@ namespace CadastroPessoa
 
         }
                 
-        
+        //public bool ValidarCnpj(string CadastroCnpj){
+            
+       // }
     }
 }
