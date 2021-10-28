@@ -5,10 +5,11 @@ namespace CadastroPessoa
     class Program
     {
         static void Main(string[] args)
-        {   
-            //instanciando um objeto pf para a classe PessoaFisica.
+        {  /* 
+            //objeto criado para chamar o metodo ValidarDataNascimento().
             PessoaFisica pf = new PessoaFisica();
 
+            //objeto criado para atribuir os valores.
            PessoaFisica novaPf = new PessoaFisica();
 
            //estanciando um objeto end para a classe Endereco com  4 atributos criados.
@@ -41,10 +42,39 @@ namespace CadastroPessoa
                Console.WriteLine($"Cadastro Reprovado!");
                
 
-           }
+           }  
+           */
            
-           
+           //objeto criado para chamar o metodo ValidarCnpj()
+           PessoaJuridica pj = new PessoaJuridica();
 
+            //objeto criado para atribuir os valores.
+           PessoaJuridica novaPj = new PessoaJuridica();
+            
+           //estanciando um objeto end para a classe Endereco com  4 atributos criados.
+           Endereco end = new Endereco();
+           
+           end.logradouro = "Rua Z";
+           end.numero = 100;
+           end.complemento = "Proximo ao senai informatica";
+           end.enderecoComercial = true;
+
+           novaPj.endereco = end;
+           novaPj.cnpj = "12345678900001";
+           novaPj.razaoSocial = "Pessoa Juridica";
+
+                 
+            //chama o metodo e valida o cnpj
+           if(pj.ValidarCnpj(novaPj.cnpj))
+           {
+               Console.WriteLine("CNPJ Válido");
+               
+           }
+           else
+           {
+               Console.WriteLine("CNPJ  Inválido");
+               
+           }
         }
     }
 }
