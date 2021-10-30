@@ -9,8 +9,20 @@ namespace CadastroPessoa
         public DateTime dataNascimento { get; set; }
         
 
-        public override void pagarImposto(float salario){
+        public override double pagarImposto(float rendimento){
+            if (rendimento <= 1500)
+            {
+                return 0;
+                //Console.WriteLine("Isento de Imposto");
+                
+            } else if (rendimento > 1500 && rendimento <= 5000)
+            {
+                return rendimento * 0.03;
 
+            } else 
+            {
+                return (rendimento / 100) * 5;                
+            }
         }
         //Metodo que vai validar a idade.
         public bool ValidarDataNascimento(DateTime dataNasc){
