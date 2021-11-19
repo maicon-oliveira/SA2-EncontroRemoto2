@@ -21,30 +21,8 @@ namespace CadastroPessoa
 |           Bem vindo ao Sistema de Cadastro de     |      
 |            Pessoa Física e Jurídica               |
 -----------------------------------------------------
-");          
-            //limpa a cor que foi selecionada no "Console.ForegroundColor"
-            Console.ResetColor();
-            //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
-            Thread.Sleep(3000);// 3 segundos
-
-            //escolhe a cor para os caracteres
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            //escolhe uma cor de fundo para os caracteres
-            Console.BackgroundColor = ConsoleColor.White;
-            
-            //escreve na tela "Iniciando"
-            Console.Write($"Iniciando");
-            //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
-            Thread.Sleep(500);//0,5 segundos
-            //usa-se um laço de repetição "for" para "." após aparecer na tela "Iniciando" = "Iniciando...."
-            for(var i = 0; i < 10; i++)
-            {
-                Console.Write($".");
-                Thread.Sleep(500);
-            }
-            //limpa a cor que foi selecionada no "Console.ForegroundColor"
-            Console.ResetColor();
-            //limpa a tela
+");         //chamando a função criada com o argumento "string Carregamento" e idicamos que o argumento é "Iniciando"
+            Carregando("Iniciando");
             Console.Clear();
 
             //usando o laço de repetição "do" "while", "faça" "enquanto"
@@ -168,7 +146,7 @@ namespace CadastroPessoa
                         Console.BackgroundColor = ConsoleColor.White;
 
                         //escreve na tela "Finalizando"
-                        Console.WriteLine($"Finalizando");
+                        Console.Write($"Finalizando");
                         //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
                         Thread.Sleep(500);//0,5 segundos
                         //usa-se um laço de repetição "for" para "." após aparecer na tela "Finalizando" = "Finalizando...."
@@ -177,7 +155,7 @@ namespace CadastroPessoa
                             Console.WriteLine($".");
                             Thread.Sleep(500);    
                         }
-                        //limpa a cor que foi selecionada no "Console.ForegroundColor"
+                        //Reseta a cor que foi selecionada, voltando ao padrão do console
                         Console.ResetColor();
                         break;
                     //se o usuário selecionar uma opção inválida faça
@@ -192,5 +170,36 @@ namespace CadastroPessoa
 
                    
         }
+    
+
+        //criando uma função "Carregando" do tipo string que vai receber os argumentos "Iniciando" e "Finalizando"
+        static void Carregando(string Carregamento)
+        {
+            
+            //Reseta a cor que foi selecionada, voltando ao padrão do console
+            Console.ResetColor();
+            //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
+            Thread.Sleep(3000);// 3 segundos
+
+            //escolhe a cor para os caracteres
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            //escolhe uma cor de fundo para os caracteres
+            Console.BackgroundColor = ConsoleColor.White;
+            
+            //aqui ele chama o argumento da função que no caso é "Iniciando" 
+            Console.Write(Carregamento);
+            //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
+            Thread.Sleep(500);//0,5 segundos
+            //usa-se um laço de repetição "for" para "." após aparecer na tela "Iniciando" = "Iniciando...."
+            for(var i = 0; i < 10; i++)
+            {
+                Console.Write($".");
+                Thread.Sleep(500);
+            }
+            //Reseta a cor que foi selecionada, voltando ao padrão do console
+            Console.ResetColor();
+        }
+    
     }
+
 }
