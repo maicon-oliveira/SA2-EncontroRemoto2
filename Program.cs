@@ -11,6 +11,9 @@ namespace CadastroPessoa
         {  
             //Criação de uma lista para armazenar os objetos do tipo PessoaFisica  
             List<PessoaFisica> lisatPf = new List<PessoaFisica>();
+            
+            //Criação de uma lista para armazenar os objetos do tipo PessoaFisica 
+            List<PessoaJuridica> listaPj = new List<PessoaJuridica>();
 
             //variável criada para guardar opção selecionada do switch case
             string opcao;
@@ -113,7 +116,7 @@ namespace CadastroPessoa
 
                         //criando input no atributo rendimento
                         Console.WriteLine($"Digite o valor do seu rendimento mensal: (somente numeros) ");
-                        //guarda a infomação que o usuério digitar no atributo nome
+                        //guarda a infomação que o usuério digitar no atributo rendimento
                         novaPf.rendimento = int.Parse(Console.ReadLine()); //int.parse faz conversão de inteiro para string
 
                         //criando input no atributo dataNascimento
@@ -149,7 +152,6 @@ namespace CadastroPessoa
                             Console.WriteLine($"{item.nome}, {item.cpf}, {item.endereco.logradouro}");
                             
                         }
-
                         break;
 
                     case "3":
@@ -174,12 +176,9 @@ namespace CadastroPessoa
                         {
                             Console.WriteLine($"Cpf não encotrado, impossível remover");
                             
-                        }
-
-                            
+                        }   
                         break;
 
-                    //se o usuário selecionou a opção 2 faça
                     case "4":
                         //objeto criado para chamar o metodo ValidarCnpj()
                         PessoaJuridica pj = new PessoaJuridica();
@@ -190,36 +189,107 @@ namespace CadastroPessoa
                         //estanciando um objeto endPj para a classe Endereco com  4 atributos criados.
                         Endereco endPj = new Endereco();
                         
-                        endPj.logradouro = "Rua Z";
-                        endPj.numero = 100;
-                        endPj.complemento = "Proximo ao senai informatica";
-                        endPj.enderecoComercial = true;
-
-                        novaPj.endereco = endPj;
-                        novaPj.cnpj = "34567890000199";
-                        novaPj.razaoSocial = "Pessoa Juridica";
-                        novaPj.rendimento = 10000;
+                        //criando o input no atributo logradouro
+                        Console.WriteLine($"Digite seu Logradouro: ");
+                        //guarda a infomação que o usuário digitar no atributo logradouro
+                        endPj.logradouro = Console.ReadLine();
                         
+                        //criando input no atributo numero
+                        Console.WriteLine($"Digite o Numero: ");
+                        //guarda a informação que o usuário digitar no atributo numero
+                        endPj.numero = int.Parse(Console.ReadLine());//int.parse faz conversão de inteiro para string
+                        
+                        //criando input no atributo complemento
+                        Console.WriteLine($"Digite o Complemento: ");
+                        //guarda a infomação que o usuério digitar no atributo complemento
+                        endPj.complemento = Console.ReadLine();
 
-                                
+                        //criando input no atributo enderecoComercial
+                        Console.WriteLine($"Este endereço é comercial? S/N ");
+                        //criando uma variável para guardar a informação que o usuário digitar
+                        string endPjComercial = Console.ReadLine().ToUpper();// to.Upper caso o usuário use s ou n minusculo
+                        //if vai validar a informação de endComercial que o usuário digitou
+                        if (endPjComercial == "S")
+                        {
+                            endPj.enderecoComercial = true;
+                        } else 
+                        {
+                            endPj.enderecoComercial = false;
+                        }
+                        
+                        //atribuindo valores para o objeto Pj.
+                        novaPj.endereco = endPj; //no atributo endereco instaciamos os valores do objeto endPj da classe Endereco
+
+                        //criando input no atributo cnpj                       
+                        Console.WriteLine($"Digite seu CNPJ: ");
+                        //guarda a infomação que o usuério digitar no atributo cnpj
+                        novaPj.cnpj = Console.ReadLine();
+                        
+                        //criando input no atributo razaoSocial
+                        Console.WriteLine($"Digite sua Razão Social: ");
+                        //guarda a infomação que o usuério digitar no atributo razaoSocial
+                        novaPj.razaoSocial = Console.ReadLine();
+                        
+                         //criando input no atributo rendimento
+                        Console.WriteLine($"Digite o valor do seu rendimento mensal: (somente numeros) ");
+                        //guarda a infomação que o usuério digitar no atributo rendimento
+                        novaPj.rendimento = int.Parse(Console.ReadLine()); //int.parse faz conversão de inteiro para string
+                        
+                            
                             //chama o metodo e valida o cnpj
                         if(pj.ValidarCnpj(novaPj.cnpj))
                         {
                             Console.WriteLine("CNPJ Válido");
+                            //após validar o cadastro, o objeto é adicionado na listaPf
+                            listaPj.Add(novaPj);
+                            //chama o metodo pagar imposto da classe PessoaFisica
+                            Console.WriteLine(pj.pagarImposto(novaPj.rendimento));
                             
                         }
                         else
                         {
                             Console.WriteLine("CNPJ  Inválido");
                             
+                        } 
+                        break;
+                    
+                    case "5":
+                        //foreach cria a variável = item para guardar cada item da listaPj
+                        foreach (var item in listaPj)
+                        {   
+                            //items selecionados para serem listados: nome, cpf e endereço
+                            Console.WriteLine($"{item.razaoSocial}, {item.cnpj}, {item.endereco.logradouro}");
+                            
                         }
-                        
-                        //chama o metodo pagar imposto da classe PessoaJuridica
-                        Console.WriteLine(pj.pagarImposto(novaPj.rendimento));
-                        
                         break;
 
-                    //se o usuário selecionou a opção 0 faça
+                    case "6":
+                        Console.WriteLine($"Digite o cnpj que deseja remover ? ");
+                        string RemoveCnpj = Console.ReadLine();
+                        
+                        /* metodo .Find procura algo dentro da lista
+                        pegando o cpf de cada item e verificando se é igual a variável RemoveCpf
+                        */
+                        PessoaJuridica pjEncontrada = listaPj.Find(item => item.cnpj == RemoveCnpj);
+
+                        /* verificamos se o cpf digitado existe no sistema, armazenando o cpf em uma nova variável pessoaEncontrada 
+                        da classe PessoaFisica, se o cpf digitado for diferente de vazio ele remove se não mostra a mensagem de 
+                        cpf não encotrado, impossivel remover
+                        */
+                        if (pjEncontrada != null )
+                        {
+                            listaPj.Remove(pjEncontrada);
+                            Console.WriteLine($"Cadastro Removido");
+                            
+                        } else
+                        {
+                            Console.WriteLine($"Cnpj não encotrado, impossível remover");
+                            
+                        }   
+                        break;
+
+
+
                     case "0":
                         //limpa a tela
                         Console.Clear();

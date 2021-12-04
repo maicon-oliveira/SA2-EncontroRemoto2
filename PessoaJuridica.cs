@@ -21,7 +21,7 @@ namespace CadastroPessoa
 
             } else 
             {   
-                //outra forma de calcular porcentagem
+                //outra forma de calcular porcentagem4
                 //calcula o rendimento com desconto de 10%
                 return (rendimento / 100) * 10;                
             }
