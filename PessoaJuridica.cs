@@ -9,16 +9,20 @@ namespace CadastroPessoa
 
         public override double pagarImposto(float rendimento){
              if (rendimento <= 5000)
-            {
+            {   
+                //calcula o rendimento com desconto de 6%
                 return rendimento * .06;
                 
                 
             } else if (rendimento > 5000 && rendimento <= 10000)
-            {
+            {   
+                //calcula o rendimento com desconto de 8%
                 return rendimento * .08;
 
             } else 
-            {
+            {   
+                //outra forma de calcular porcentagem
+                //calcula o rendimento com desconto de 10%
                 return (rendimento / 100) * 10;                
             }
         }

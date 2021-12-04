@@ -8,19 +8,20 @@ namespace CadastroPessoa
 
         public DateTime dataNascimento { get; set; }
         
-
+        //metodo para calcular imposto
         public override double pagarImposto(float rendimento){
             if (rendimento <= 1500)
             {
                 return 0;
-                //Console.WriteLine("Isento de Imposto");
                 
             } else if (rendimento > 1500 && rendimento <= 5000)
-            {
+
+            {   //calcula o rendimento com desconto de 3%
                 return rendimento * 0.03;
 
             } else 
-            {
+            {   //outra forma de calcular porcentagem
+                //calcula o rendimento com desconto de 5%
                 return (rendimento / 100) * 5;                
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
@@ -8,6 +9,9 @@ namespace CadastroPessoa
     {
         static void Main(string[] args)
         {  
+            //Criação de uma lista para armazenar os objetos do tipo PessoaFisica  
+            List<PessoaFisica> lisatPf = new List<PessoaFisica>();
+
             //variável criada para guardar opção selecionada do switch case
             string opcao;
 
@@ -33,12 +37,19 @@ namespace CadastroPessoa
                 //@ no "Console.WriteLine" personaliza no console exatamente o que foi escrito incluido o posicionamento
                 Console.WriteLine(@$"
 ====================================================
-                Escolha uma das opções abaixo      |
+|               Escolha uma das opções abaixo      |
 ---------------------------------------------------|
-               1 - Pessoa Física                   |              
-               2 - Pessoa Jurídica                 |
-                                                   |
-               0 - Sair                            |
+|                  PESSOA FÍSICA                   |
+|                1 - Cadastrar P.F.                |
+|                2 - Listar    P.F.                |
+|                3 - Remover   P.F.                |              
+|                                                  |
+|                  PESSOA JURIDICA                 |
+|                4 - Cadastrar P.J.                |
+|                5 - Listar    P.J.                |
+|                6 - Remover   P.J.                |
+|                                                  |
+|                0 - Sair                          |
 ====================================================               
                 ");
                 
@@ -58,21 +69,57 @@ namespace CadastroPessoa
 
                         //estanciando um objeto end para a classe Endereco com  4 atributos criados.
                         Endereco end = new Endereco();
-          
-                        //atribuindo valores para o objeto end.
-                        end.logradouro = "Rua X";
-                        end.numero = 100;
-                        end.complemento = "proximo ao senai";
-                        end.enderecoComercial = false;
 
+                        //criando o input no atributo logradouro
+                        Console.WriteLine($"Digite seu Logradouro: ");
+                        //guarda a infomação que o usuário digitar no atributo logradouro
+                        end.logradouro = Console.ReadLine();
+                        
+                        //criando input no atributo numero
+                        Console.WriteLine($"Digite o Numero: ");
+                        //guarda a informação que o usuário digitar no atributo numero
+                        end.numero = int.Parse(Console.ReadLine());//int.parse faz conversão de inteiro para string 
+
+                        //criando input no atributo complemento
+                        Console.WriteLine($"Digite o Complemento: ");
+                        //guarda a infomação que o usuério digitar no atributo complemento
+                        end.complemento = Console.ReadLine();
+
+                        //criando input no atributo enderecoComercial
+                        Console.WriteLine($"Este endereço é comercial? S/N ");
+                        //criando uma variável para guardar a informação que o usuário digitar
+                        string endComercial = Console.ReadLine().ToUpper();// to.Upper caso o usuário use s ou n minusculo
+                        //if vai validar a informação de endComercial que o usuário digitou
+                        if (endComercial == "S")
+                        {
+                            end.enderecoComercial = true;
+                        } else 
+                        {
+                            end.enderecoComercial = false;
+                        }
+                        
                         //atribuindo valores para o objeto pf.
                         novaPf.endereco = end; //no atributo endereco instaciamos os valores do objeto end da classe Endereco.
-                        novaPf.cpf = "123456789";
-                        novaPf.nome = "Pessoa Fisica";
-                        novaPf.rendimento = 100000;
-                        novaPf.dataNascimento = new DateTime(2000, 06, 15);
 
-                        Console.WriteLine($"{novaPf.endereco.logradouro}, {novaPf.endereco.numero}");
+                        //criando input no atributo cpf                       
+                        Console.WriteLine($"Digite seu CPF: ");
+                        //guarda a infomação que o usuério digitar no atributo cpf
+                        novaPf.cpf = Console.ReadLine();
+
+                        //criando input no atributo nome
+                        Console.WriteLine($"Digite seu Nome: ");
+                        //guarda a infomação que o usuério digitar no atributo nome
+                        novaPf.nome = Console.ReadLine();
+
+                        //criando input no atributo rendimento
+                        Console.WriteLine($"Digite o valor do seu rendimento mensal: (somente numeros) ");
+                        //guarda a infomação que o usuério digitar no atributo nome
+                        novaPf.rendimento = int.Parse(Console.ReadLine()); //int.parse faz conversão de inteiro para string
+
+                        //criando input no atributo dataNascimento
+                        Console.WriteLine($"Digite sua data de nascimento:  EX: AAAA-MM-DD");
+                        //guarda a infomação que o usuério digitar no atributo dataNascimento
+                        novaPf.dataNascimento = DateTime.Parse(Console.ReadLine());
 
                         //metodo que valida a idade.
                         bool idadeValida = pf.ValidarDataNascimento(novaPf.dataNascimento);
@@ -81,21 +128,59 @@ namespace CadastroPessoa
                         if(idadeValida == true){
 
                             Console.WriteLine($"Cadastro Aprovado!");
-                                
+                            //após validar o cadastro, o objeto é adicionado na listaPf
+                            lisatPf.Add(novaPf);
+                            //chama o metodo pagar imposto da classe PessoaFisica
+                            Console.WriteLine(pf.pagarImposto(novaPf.rendimento));
+        
                         } else 
                         {
 
                             Console.WriteLine($"Cadastro Reprovado!");
                                 
                         }  
+                        break;
 
-                        Console.WriteLine(pf.pagarImposto(novaPf.rendimento));
-                        
+                    case "2":
+                        //foreach cria a variável = item para guardar cada item da listaPF
+                        foreach (var item in lisatPf)
+                        {   
+                            //items selecionados para serem listados: nome, cpf e endereço
+                            Console.WriteLine($"{item.nome}, {item.cpf}, {item.endereco.logradouro}");
+                            
+                        }
 
                         break;
 
+                    case "3":
+                        Console.WriteLine($"Digite o cpf que deseja remover ? ");
+                        string RemoveCpf = Console.ReadLine();
+                        
+                        /* metodo .Find procura algo dentro da lista
+                        pegando o cpf de cada item e verificando se é igual a variável RemoveCpf
+                        */
+                        PessoaFisica pessoaEncontrada = lisatPf.Find(item => item.cpf == RemoveCpf);
+
+                        /* verificamos se o cpf digitado existe no sistema, armazenando o cpf em uma nova variável pessoaEncontrada 
+                        da classe PessoaFisica, se o cpf digitado for diferente de vazio ele remove se não mostra a mensagem de 
+                        cpf não encotrado, impossivel remover
+                        */
+                        if (pessoaEncontrada != null )
+                        {
+                            lisatPf.Remove(pessoaEncontrada);
+                            Console.WriteLine($"Cadastro Removido");
+                            
+                        } else
+                        {
+                            Console.WriteLine($"Cpf não encotrado, impossível remover");
+                            
+                        }
+
+                            
+                        break;
+
                     //se o usuário selecionou a opção 2 faça
-                    case "2":
+                    case "4":
                         //objeto criado para chamar o metodo ValidarCnpj()
                         PessoaJuridica pj = new PessoaJuridica();
 
@@ -128,7 +213,8 @@ namespace CadastroPessoa
                             Console.WriteLine("CNPJ  Inválido");
                             
                         }
-
+                        
+                        //chama o metodo pagar imposto da classe PessoaJuridica
                         Console.WriteLine(pj.pagarImposto(novaPj.rendimento));
                         
                         break;
@@ -139,24 +225,10 @@ namespace CadastroPessoa
                         Console.Clear();
                         //escreva a mensagem na tela
                         Console.WriteLine($"Obrigado por utilizar nosso sistema.");
-                        
-                        //escolhe a cor para os caracteres
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        //escolhe uma cor de fundo para os caracteres
-                        Console.BackgroundColor = ConsoleColor.White;
 
-                        //escreve na tela "Finalizando"
-                        Console.Write($"Finalizando");
-                        //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
-                        Thread.Sleep(500);//0,5 segundos
-                        //usa-se um laço de repetição "for" para "." após aparecer na tela "Finalizando" = "Finalizando...."
-                        for(var i = 0; i < 10; i++)
-                        {
-                            Console.WriteLine($".");
-                            Thread.Sleep(500);    
-                        }
-                        //Reseta a cor que foi selecionada, voltando ao padrão do console
-                        Console.ResetColor();
+                         //chamando a função criada com o argumento "string Carregamento" e idicamos que o argumento é "Finalizando"
+                        Carregando("Finalizando"); 
+                       
                         break;
                     //se o usuário selecionar uma opção inválida faça
                     default:
@@ -173,7 +245,7 @@ namespace CadastroPessoa
     
 
         //criando uma função "Carregando" do tipo string que vai receber os argumentos "Iniciando" e "Finalizando"
-        static void Carregando(string Carregamento)
+        static void Carregando(string CarregaTexto)
         {
             
             //Reseta a cor que foi selecionada, voltando ao padrão do console
@@ -183,11 +255,9 @@ namespace CadastroPessoa
 
             //escolhe a cor para os caracteres
             Console.ForegroundColor = ConsoleColor.DarkBlue;
-            //escolhe uma cor de fundo para os caracteres
-            Console.BackgroundColor = ConsoleColor.White;
             
             //aqui ele chama o argumento da função que no caso é "Iniciando" 
-            Console.Write(Carregamento);
+            Console.Write(CarregaTexto);
             //tempo em milissegundos que o sistema vai parar(gera uma pausa para melhor interação do usuário)
             Thread.Sleep(500);//0,5 segundos
             //usa-se um laço de repetição "for" para "." após aparecer na tela "Iniciando" = "Iniciando...."
