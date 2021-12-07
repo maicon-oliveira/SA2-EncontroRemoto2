@@ -9,11 +9,18 @@ namespace CadastroPessoa
     {
         static void Main(string[] args)
         {  
+            //objeto criado para chamar os metodos 
+            PessoaJuridica pj = new PessoaJuridica();
+
+            //objeto criado para atribuir os valores
+            PessoaJuridica novaPj = new PessoaJuridica();
+
             //Criação de uma lista para armazenar os objetos do tipo PessoaFisica  
             List<PessoaFisica> lisatPf = new List<PessoaFisica>();
             
             //Criação de uma lista para armazenar os objetos do tipo PessoaFisica 
             List<PessoaJuridica> listaPj = new List<PessoaJuridica>();
+            
 
             //variável criada para guardar opção selecionada do switch case
             string opcao;
@@ -40,8 +47,8 @@ namespace CadastroPessoa
                 //@ no "Console.WriteLine" personaliza no console exatamente o que foi escrito incluido o posicionamento
                 Console.WriteLine(@$"
 ====================================================
-|               Escolha uma das opções abaixo      |
----------------------------------------------------|
+|           Escolha uma das opções abaixo          |
+|--------------------------------------------------|
 |                  PESSOA FÍSICA                   |
 |                1 - Cadastrar P.F.                |
 |                2 - Listar    P.F.                |
@@ -70,7 +77,7 @@ namespace CadastroPessoa
                         //objeto criado para atribuir os valores.
                         PessoaFisica novaPf = new PessoaFisica();
 
-                        //estanciando um objeto end para a classe Endereco com  4 atributos criados.
+                       //estanciando um objeto end para a classe Endereco com  4 atributos criados.
                         Endereco end = new Endereco();
 
                         //criando o input no atributo logradouro
@@ -108,7 +115,7 @@ namespace CadastroPessoa
                         Console.WriteLine($"Digite seu CPF: ");
                         //guarda a infomação que o usuério digitar no atributo cpf
                         novaPf.cpf = Console.ReadLine();
-
+                
                         //criando input no atributo nome
                         Console.WriteLine($"Digite seu Nome: ");
                         //guarda a infomação que o usuério digitar no atributo nome
@@ -141,7 +148,34 @@ namespace CadastroPessoa
 
                             Console.WriteLine($"Cadastro Reprovado!");
                                 
-                        }  
+                        } 
+                      
+                        /*
+                         using é um metodo global do c# e streamWriter é uma classe global do c#, 
+                        é preciso criar um objeto desta classe onde passamos como argumento o nome
+                        do aquivo que vamos salvar os dados inseridos no sistema 
+                       // using (StreamWriter sw = new StreamWriter($"CadastroPessoaFisica.txt"))
+                        {
+                            //salva no arquivo CadastroPessoaFisica.txt o nome digitado no sistema1
+                           // sw.Write($"{novaPf.nome}");
+                        }
+
+                        /* a classe StreamReader vai ler o arquivo CadastroPessoaFisica.txt 
+                        e escrever o conteudo do mesmo no console 
+                       // using (StreamReader sr = new StreamReader($"CadastroPessoaFisica.txt"))
+                        {    
+                            //criamos esta variável para guardar o conteudo do arquivo
+                         //   string linha;
+                          /*  while vai verificar se o conteudo do arquivo que foi passado para a variável
+                            linha é diferente de vazio, se verdadeiro escreve o conteudo do arquivo no console, 
+                            se falso não executa nada  
+                          //  while ((linha = sr.ReadLine()) != null)
+                            {
+                                Console.WriteLine($"{linha}");
+                                
+                            }
+                        }
+                        */
                         break;
 
                     case "2":
@@ -180,11 +214,6 @@ namespace CadastroPessoa
                         break;
 
                     case "4":
-                        //objeto criado para chamar o metodo ValidarCnpj()
-                        PessoaJuridica pj = new PessoaJuridica();
-
-                        //objeto criado para atribuir os valores.
-                        PessoaJuridica novaPj = new PessoaJuridica();
                             
                         //estanciando um objeto endPj para a classe Endereco com  4 atributos criados.
                         Endereco endPj = new Endereco();
@@ -224,11 +253,17 @@ namespace CadastroPessoa
                         Console.WriteLine($"Digite seu CNPJ: ");
                         //guarda a infomação que o usuério digitar no atributo cnpj
                         novaPj.cnpj = Console.ReadLine();
+
+                        //criando input no atributo nome
+                        Console.WriteLine($"Digite seu Nome: ");
+                         //guarda a infomação que o usuario digitar no atributo nome
+                        novaPj.nome = Console.ReadLine();
                         
                         //criando input no atributo razaoSocial
                         Console.WriteLine($"Digite sua Razão Social: ");
-                        //guarda a infomação que o usuério digitar no atributo razaoSocial
+                        //guarda a infomação que o usuario digitar no atributo razaoSocial
                         novaPj.razaoSocial = Console.ReadLine();
+
                         
                          //criando input no atributo rendimento
                         Console.WriteLine($"Digite o valor do seu rendimento mensal: (somente numeros) ");
@@ -251,16 +286,34 @@ namespace CadastroPessoa
                             Console.WriteLine("CNPJ  Inválido");
                             
                         } 
+
+                        //chama o metodo que vai analisar se a pasta e o arquivo já existe
+                        pj.AnalisarArquivo(pj.caminho);
+                        
+                        //chama o metodo que vai inserir as informações dentro do arquivodto
+                        pj.Inserir(novaPj);
+
                         break;
                     
                     case "5":
-                        //foreach cria a variável = item para guardar cada item da listaPj
-                        foreach (var item in listaPj)
+
+                    
+                        if (pj.LerArquivo().Count > 1)
                         {   
-                            //items selecionados para serem listados: nome, cpf e endereço
-                            Console.WriteLine($"{item.razaoSocial}, {item.cnpj}, {item.endereco.logradouro}");
+                            //foreach cria a variável = item para guardar cada item da listaPj
+                            foreach (var item in pj.LerArquivo())
+                            {
+                                //items selecionados para serem listados: cnpj
+                                Console.Write($"CNPJ:{item.cnpj}");
+                                
+                            }
+                        } else
+                        {
+                            Console.WriteLine($"A Lista Esta Vazia");
                             
                         }
+                  
+                
                         break;
 
                     case "6":
@@ -287,8 +340,6 @@ namespace CadastroPessoa
                             
                         }   
                         break;
-
-
 
                     case "0":
                         //limpa a tela
