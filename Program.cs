@@ -277,7 +277,7 @@ namespace CadastroPessoa
                             //após validar o cadastro, o objeto é adicionado na listaPf
                             listaPj.Add(novaPj);
                             //chama o metodo pagar imposto da classe PessoaFisica
-                            Console.WriteLine(pj.pagarImposto(novaPj.rendimento));
+                            Console.WriteLine($"O imposto a pagar é de:R$ {pj.pagarImposto(novaPj.rendimento)},00");
                             
                         }
                         else
@@ -297,13 +297,13 @@ namespace CadastroPessoa
                     case "5":
 
                     
-                        if (pj.LerArquivo().Count > 1)
+                        if (pj.LerArquivo().Count > 0)
                         {   
                             //foreach cria a variável = item para guardar cada item da listaPj
                             foreach (var item in pj.LerArquivo())
                             {
                                 //items selecionados para serem listados: cnpj
-                                Console.Write($"CNPJ:{item.cnpj}");
+                                Console.WriteLine($"CNPJ Cadastrado: {item.cnpj}");
                                 
                             }
                         } else
