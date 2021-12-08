@@ -141,7 +141,7 @@ namespace CadastroPessoa
                             //após validar o cadastro, o objeto é adicionado na listaPf
                             lisatPf.Add(novaPf);
                             //chama o metodo pagar imposto da classe PessoaFisica
-                            Console.WriteLine(pf.pagarImposto(novaPf.rendimento));
+                            Console.WriteLine($"O imposto a pagar é de:R$ {pf.pagarImposto(novaPf.rendimento)},00");
         
                         } else 
                         {
@@ -150,32 +150,31 @@ namespace CadastroPessoa
                                 
                         } 
                       
-                        /*
-                         using é um metodo global do c# e streamWriter é uma classe global do c#, 
+                        /* using é um metodo global do c# e streamWriter é uma classe global do c#, 
                         é preciso criar um objeto desta classe onde passamos como argumento o nome
-                        do aquivo que vamos salvar os dados inseridos no sistema 
-                       // using (StreamWriter sw = new StreamWriter($"CadastroPessoaFisica.txt"))
+                        do aquivo que vamos salvar os dados inseridos no sistema */
+                        using (StreamWriter sw = new StreamWriter($"CadastroPessoaFisica.txt"))
                         {
                             //salva no arquivo CadastroPessoaFisica.txt o nome digitado no sistema1
-                           // sw.Write($"{novaPf.nome}");
+                            sw.Write($"Nome: {novaPf.nome}, CPF: {novaPf.cpf}, Endereço: {novaPf.endereco.logradouro} ");
                         }
 
                         /* a classe StreamReader vai ler o arquivo CadastroPessoaFisica.txt 
-                        e escrever o conteudo do mesmo no console 
-                       // using (StreamReader sr = new StreamReader($"CadastroPessoaFisica.txt"))
+                        e escrever o conteudo do mesmo no console */
+                        using (StreamReader sr = new StreamReader($"CadastroPessoaFisica.txt"))
                         {    
                             //criamos esta variável para guardar o conteudo do arquivo
-                         //   string linha;
+                            string linha;
                           /*  while vai verificar se o conteudo do arquivo que foi passado para a variável
                             linha é diferente de vazio, se verdadeiro escreve o conteudo do arquivo no console, 
-                            se falso não executa nada  
-                          //  while ((linha = sr.ReadLine()) != null)
+                            se falso não executa nada  */
+                            while ((linha = sr.ReadLine()) != null)
                             {
                                 Console.WriteLine($"{linha}");
                                 
                             }
                         }
-                        */
+
                         break;
 
                     case "2":
